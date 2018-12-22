@@ -22,8 +22,9 @@ public abstract class BaseTimeMeter implements Runnable {
     public abstract void stopRunning();
     public abstract void itIsThTime();
 
-    public void setWaitTime(int waitTime) {
+    public BaseTimeMeter setWaitTime(int waitTime) {
         this.waitTime = waitTime;
+        return this;
     }
 
     public void stopTimeMeter() {
@@ -35,7 +36,7 @@ public abstract class BaseTimeMeter implements Runnable {
         worker = new TimeMeterWorker();
         new Thread(worker).start();
         synchronized (lock) {
-            new Thread(this, "TimeWoker").start();
+            new Thread(this, "BaseTimeMeter").start();
             try {
                 lock.wait();
             } catch (InterruptedException e) {
